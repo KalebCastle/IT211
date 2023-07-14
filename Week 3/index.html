@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Grades</title>
+</head>
+<body>
+  <h1>Student Grades</h1>
+
+  <div id="studentData"></div>
+
+  <script>
+    var grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+
+    // Split the grades string into an array of student data
+    var students = grades.split(", ");
+
+    // Variables to store lowest, highest, and total scores
+    var lowestScore = Infinity;
+    var highestScore = -Infinity;
+    var totalScore = 0;
+
+    // Display student data
+    var studentDataDiv = document.getElementById("studentData");
+
+    for (var i = 0; i < students.length; i++) {
+      var student = students[i].split("|");
+      var name = student[0].charAt(0).toUpperCase() + student[0].slice(1);
+      var score = parseInt(student[1]);
+
+      // Update lowest and highest scores
+      if (score < lowestScore) {
+        lowestScore = score;
+      }
+      if (score > highestScore) {
+        highestScore = score;
+      }
+
+      // Add current score to total
+      totalScore += score;
+
+      // Display student name and score
+      var studentInfo = document.createElement("p");
+      studentInfo.textContent = name + " - " + score;
+      studentDataDiv.appendChild(studentInfo);
+    }
+
+    // Calculate average score
+    var averageScore = totalScore / students.length;
+
+    // Display total number of students, lowest, highest, and average scores
+    var summaryInfo = document.createElement("p");
+    summaryInfo.textContent = "Total Students: " + students.length + "   " +
+                              "Lowest Score: " + lowestScore + "   " +
+                              "Highest Score: " + highestScore + "   " +
+                              "Average Score: " + averageScore.toFixed(2);
+    studentDataDiv.appendChild(summaryInfo);
+  </script>
+</body>
+</html>
