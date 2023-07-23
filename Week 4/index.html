@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+
+<h1>Functions & validation</h1>
+
+<form id="form1" action="#" onsubmit="return validateForm(this);">
+  first name: <input type="text" name="firstname" required><br>
+  last name: <input type="text" name="lastname" required><br>
+  password: <input type="password" name="password" required><br> <!-- Use type="password" for password fields -->
+  
+  <button>Check</button>
+</form>
+
+<hr>
+<div id="message"></div>
+
+<script>
+// Function to validate passwords
+const validatePassword = (password) => {
+  // Password should have at least 8 characters, at least one uppercase letter, and at least one lowercase letter
+  const regex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  return regex.test(password);
+};
+
+// Function to validate the form
+const validateForm = (myForm) => {
+  const firstname = myForm.firstname.value;
+  const lastname = myForm.lastname.value;
+  const password = myForm.password.value;
+
+  // Check if first name and last name are not missing
+  if (!firstname || !lastname) {
+    $("#message").html("Please enter both first name and last name.");
+    return false;
+  }
+
+  // Check if the password is valid
+  if (!validatePassword(password)) {
+    $("#message").html("Invalid password. Password should have at least 8 characters, at least one uppercase letter, and at least one lowercase letter.");
+    return false;
+  }
+
+  // All fields are valid
+  $("#message").html("All fields complete");
+  return false; // prevent page reload
+};
+</script>
+
+</body>
+</html
