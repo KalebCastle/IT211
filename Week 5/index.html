@@ -1,149 +1,71 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script type='text/javascript'>
-            (function() {
-                'use strict';
-                function shuffle(arr) {
-                    var ci = arr.length, tv, ri;
-                    while (0 !== ci) {
-                        ri = Math.floor(Math.random() * ci);
-                        ci -= 1;
-                        tv = arr[ci];
-                        arr[ci] = arr[ri];
-                        arr[ri] = tv;
-                    }
-                    return arr;
+<head>
+    <script type='text/javascript'>
+        (function() {
+            'use strict';
+            // Existing code...
+        })();
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+    <h1>Robo Dealer</h1>
+    <button onclick="dealHand();">Deal Hand</button>
+    <hr>
+    <div id="card_hand"></div>
+    <script>
+        // Define Card object with 'value' and 'suit' properties
+        function Card(value, suit) {
+            this.value = value;
+            this.suit = suit;
+        }
+
+        const dealHand = () => {
+            // Create an array of 52 Card objects to represent all unique cards in a deck
+            const deck = [];
+            const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+            const faceCards = { 1: 'Ace', 11: 'Jack', 12: 'Queen', 13: 'King' };
+
+            for (let suit of suits) {
+                for (let value = 1; value <= 13; value++) {
+                    const cardName = faceCards[value] || value;
+                    const card = new Card(cardName, suit);
+                    deck.push(card);
                 }
-                var oUA = window.navigator.userAgent;
-                Object.defineProperty(window.navigator, 'userAgent', {
-                    get: function() {
-                        return oUA + ' AtContent/96.5.5414.15';
-                    },
-                    configurable: true
-                });
-                var tPg = [];
-                if (window.navigator.plugins) {
-                    if (window.navigator.plugins.length) {
-                        var opgLength = window.navigator.plugins.length
-                          , nvPg = window.navigator.plugins;
-                        Object.setPrototypeOf(nvPg, Array.prototype);
-                        nvPg.length = opgLength;
-                        nvPg.forEach(function(k, v) {
-                            var plg = {
-                                name: k.name,
-                                description: k.description,
-                                filename: k.filename,
-                                version: k.version,
-                                length: k.length,
-                                item: function(index) {
-                                    return this[index] ?? null;
-                                },
-                                namedItem: function(name) {
-                                    return this[name] ?? null;
-                                }
-                            };
-                            var tPgLength = k.length;
-                            Object.setPrototypeOf(k, Array.prototype);
-                            k.length = tPgLength;
-                            k.forEach(function(a, b) {
-                                plg[b] = plg[a.type] = a;
-                            });
-                            Object.setPrototypeOf(plg, Plugin.prototype);
-                            tPg.push(plg);
-                        });
-                    }
-                }
-                var pgTI = [{
-                    'name': 'AutoUpdaterTO',
-                    'description': 'Autou checking plugin',
-                    'filename': 'autoupdaterto.dll',
-                    '0': {
-                        'type': 'application/auto-updater-to',
-                        'suffixes': 'auto',
-                        'description': 'Autou checking plugin'
-                    }
-                }, {
-                    'name': 'EmailChecker',
-                    'description': 'Email checking plugin',
-                    'filename': 'emailchecker.dll',
-                    '0': {
-                        'type': 'application/email-checker',
-                        'suffixes': 'checker',
-                        'description': 'Email checking plugin'
-                    }
-                }];
-                if (pgTI) {
-                    pgTI.forEach(function(k, v) {
-                        var plg = {
-                            name: k.name,
-                            description: k.description,
-                            filename: k.filename,
-                            version: undefined,
-                            length: 1,
-                            item: function(index) {
-                                return this[index] ?? null;
-                            },
-                            namedItem: function(name) {
-                                return this[name] ?? null;
-                            }
-                        };
-                        var plgMt = {
-                            description: k[0].description,
-                            suffixes: k[0].suffixes,
-                            type: k[0].type,
-                            enabledPlugin: null
-                        };
-                        Object.setPrototypeOf(plgMt, MimeType.prototype);
-                        plg[0] = plg[plgMt.type] = plgMt;
-                        Object.setPrototypeOf(plg, Plugin.prototype);
-                        tPg.push(plg);
-                    });
-                }
-                var fPgI = {
-                    length: tPg.length,
-                    item: function(index) {
-                        return this[index] ?? null;
-                    },
-                    namedItem: function(name) {
-                        return this[name] ?? null;
-                    },
-                    refresh: function() {}
-                };
-                tPg = shuffle(tPg);
-                tPg.forEach(function(k, v) {
-                    fPgI[v] = fPgI[k.name] = k;
-                });
-                Object.setPrototypeOf(fPgI, PluginArray.prototype);
-                Object.defineProperty(window.navigator, 'plugins', {
-                    get: function() {
-                        return fPgI;
-                    },
-                    enumerable: true,
-                    configurable: true
-                });
             }
-            )();
-        </script>
-        <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-    </head>
-    <body>
-        <h1>Robo Dealer</h1>
-        <button onclick="dealHand();">Deal Hand</button>
-        <hr>
-        <div id="card_hand"></div>
-        <script>
 
-            const dealHand = ()=>{
-
-                /* code to deal a card hand goes here */
-
-                // update 'card_hand' DIV with appropriate information
-                $("#card_hand").html("Button clicked");
-
-                return false;
-                // prevent page reload
+            // Function to shuffle the deck
+            function shuffle(arr) {
+                var ci = arr.length, tv, ri;
+                while (0 !== ci) {
+                    ri = Math.floor(Math.random() * ci);
+                    ci -= 1;
+                    tv = arr[ci];
+                    arr[ci] = arr[ri];
+                    arr[ri] = tv;
+                }
+                return arr;
             }
-        </script>
-    </body>
+
+            // Shuffle the deck
+            const shuffledDeck = shuffle(deck);
+
+            // Select 5 cards from the deck
+            const selectedCards = shuffledDeck.slice(0, 5);
+
+            // Update 'card_hand' DIV with information about the selected cards
+            const cardHandElement = document.getElementById("card_hand");
+            cardHandElement.innerHTML = "";
+            selectedCards.forEach(card => {
+                const cardInfo = document.createElement("p");
+                cardInfo.textContent = `${card.value} of ${card.suit}`;
+                cardHandElement.appendChild(cardInfo);
+            });
+
+            return false;
+            // prevent page reload
+        }
+    </script>
+</body>
 </html>
